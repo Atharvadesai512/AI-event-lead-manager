@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+event_leads.db
+node_modules/
+dist/
