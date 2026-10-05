@@ -1,11 +1,12 @@
 from fastapi import Depends, FastAPI, HTTPException, Query
 from sqlalchemy.orm import Session
-from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 from . import crud
 from . import schemas
 from .database import Base, engine, get_db
 from .ai_service import generate_follow_up
+
 
 Base.metadata.create_all(bind=engine)
 
@@ -15,6 +16,9 @@ app = FastAPI(
     description="AI-powered event lead management system",
     version="1.0.0",
 )
+
+
+# CORS configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -22,11 +26,13 @@ app.add_middleware(
         "http://127.0.0.1:5173",
         "http://localhost:5174",
         "http://127.0.0.1:5174",
+        "https://ai-event-lead-manager-2.onrender.com",
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.get("/")
 def root():
@@ -137,6 +143,7 @@ def delete_lead(
         "lead_id": lead_id,
     }
 
+
 @app.post("/leads/{lead_id}/ai-draft")
 def generate_ai_draft(
     lead_id: int,
@@ -163,6 +170,7 @@ def generate_ai_draft(
             event=lead.event,
             notes=lead.notes,
         )
+
     except Exception as exc:
         raise HTTPException(
             status_code=503,
