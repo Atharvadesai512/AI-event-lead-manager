@@ -26,6 +26,8 @@ app.add_middleware(
         "http://127.0.0.1:5173",
         "http://localhost:5174",
         "http://127.0.0.1:5174",
+
+        # Deployed frontend
         "https://ai-event-lead-manager-2.onrender.com",
     ],
     allow_credentials=True,
